@@ -1,6 +1,6 @@
 turns = 50
 
-changeRate = 0.19
+changeRate = 0.2
 decay = 10
 
 beats = {"R": "S", 
@@ -145,6 +145,3 @@ if wins.count(-1) > wins.count(1):
 else:
     print("You Win")
     print(1-(wins.count(-1)/(len(wins) - wins.count(0))))
-print(MarcovW)
-print(MarcovL)
-print(MarcovD)
