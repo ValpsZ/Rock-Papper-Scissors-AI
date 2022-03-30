@@ -1,10 +1,9 @@
-turns = 50
+turns = 25
 
-changeRate = 0.2
-decay = 10
+changeRate = 0.15
+decay = 7
 
-beats = {"R": "S", 
-"P": "R", "S": "P"}
+beats = {"R": "S", "P": "R", "S": "P"}
 
 alowed = ["R", "P", "S"]
 
@@ -12,7 +11,7 @@ MarcovW = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1
 MarcovL = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
 MarcovD = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
 
-data = ["R", "R"]
+data = ["R", "P"]
 wins = [0]
 lastX = "S"
 lastY = "S"
@@ -29,7 +28,6 @@ def chainUpdate(x, lastY):
     lastX = data[-decay + 1:]
     lastWins = wins[-decay + 1:]
     idxMarc = 0
-    print(lastX)
 
     MarcovW = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
     MarcovL = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
@@ -47,21 +45,21 @@ def chainUpdate(x, lastY):
         if lastX[i] == lastX[i + 1]:
             if lastX[i - 1] == lastX[i]:
                 MarcovU = {"P": {"B": idxMarc["P"]["B"]-changeRate/2, "L": idxMarc["P"]["L"]-changeRate/2, "P": idxMarc["P"]["P"]+changeRate}}
-            elif lastX[i - 1] == beats[lastX[i]]:
+            elif lastX[i] == beats[lastX[i - 1]]:
                 MarcovU = {"L": {"B": idxMarc["L"]["B"]-changeRate/2, "L": idxMarc["L"]["L"]-changeRate/2, "P": idxMarc["L"]["P"]+changeRate}}
             else:
                 MarcovU = {"B": {"B": idxMarc["B"]["B"]-changeRate/2, "L": idxMarc["B"]["L"]-changeRate/2, "P": idxMarc["B"]["P"]+changeRate}}
-        elif lastX[i] == beats[lastX[i + 1]]:
+        elif lastX[i + 1] == beats[lastX[i]]:
             if lastX[i - 1] == lastX[i]:
-                MarcovU = {"P": {"B": idxMarc["P"]["B"]-changeRate/2, "L": idxMarc["P"]["L"]+changeRate, "P": idxMarc["P"]["P"]-changeRate/2}}
-            elif lastX[i - 1] == beats[lastX[i]]:
+                MarcovU = {"p": {"B": idxMarc["P"]["B"]-changeRate/2, "L": idxMarc["P"]["L"]+changeRate, "P": idxMarc["P"]["P"]-changeRate/2}}
+            elif lastX[i] == beats[lastX[i - 1]]:
                 MarcovU = {"L": {"B": idxMarc["L"]["B"]-changeRate/2, "L": idxMarc["L"]["L"]+changeRate, "P": idxMarc["L"]["P"]-changeRate/2}}
             else:
                 MarcovU = {"B": {"B": idxMarc["B"]["B"]-changeRate/2, "L": idxMarc["B"]["L"]+changeRate, "P": idxMarc["B"]["P"]-changeRate/2}}
         else:
             if lastX[i - 1] == lastX[i]:
                 MarcovU = {"P": {"B": idxMarc["P"]["B"]+changeRate, "L": idxMarc["P"]["L"]-changeRate/2, "P": idxMarc["P"]["P"]-changeRate/2}}
-            elif lastX[i - 1] == beats[lastX[i]]:
+            elif lastX[i] == beats[lastX[i - 1]]:
                 MarcovU = {"L": {"B": idxMarc["L"]["B"]+changeRate, "L": idxMarc["L"]["L"]-changeRate/2, "P": idxMarc["L"]["P"]-changeRate/2}}
             else:
                 MarcovU = {"B": {"B": idxMarc["B"]["B"]+changeRate, "L": idxMarc["B"]["L"]-changeRate/2, "P": idxMarc["B"]["P"]-changeRate/2}}
