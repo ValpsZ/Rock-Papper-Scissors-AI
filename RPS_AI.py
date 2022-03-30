@@ -1,6 +1,6 @@
 turns = 25
 
-changeRate = 0.15
+changeRate = 0.18
 decay = 7
 
 beats = {"R": "S", "P": "R", "S": "P"}
@@ -24,14 +24,17 @@ def chainUpdate(x, lastY):
     global data
     global decay
     global wins
-    
+
     lastX = data[-decay + 1:]
     lastWins = wins[-decay + 1:]
     idxMarc = 0
 
-    MarcovW = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
-    MarcovL = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
-    MarcovD = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
+    if 1 in lastWins:
+        MarcovW = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
+    if -1 in lastWins:
+        MarcovL = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
+    if 0 in lastWins:
+        MarcovD = {"B": {"B": 1/3, "L": 1/3, "P": 1/3}, "L": {"B": 1/3, "L": 1/3, "P": 1/3}, "P": {"B": 1/3, "L": 1/3, "P": 1/3}}
 
     for i in range(len(lastX) - 1):
 
