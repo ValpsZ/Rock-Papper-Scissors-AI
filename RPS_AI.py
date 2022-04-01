@@ -1,9 +1,9 @@
 import random
 
-turns = 30
+turns = 35
 
-changeRate = 0.2
-decay = 6
+changeRate = 0.21
+decay = 5
 
 beats = {"R": "S", "P": "R", "S": "P"}
 
@@ -106,7 +106,7 @@ def rpsAi(lastWins, lastX):
         elif MarcovD[strat]["B"] > MarcovD[strat]["P"]:
             newStrat = "B"
 
-    if random.random() < 0.7:
+    if random.random() < 1 - 1/(decay-1):
         if newStrat == "P":
             output = beats[beats[lastX[1]]]
         elif newStrat == "L":
